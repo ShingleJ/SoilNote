@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="0" >
+        <Button
+	        android:id="@+id/button1"
+	        android:layout_height="wrap_content"
+	        android:layout_width="wrap_content"
+	        android:layout_weight="1"
+	        android:text="拍照" />
+        
+        <Button 
+            android:id="@+id/save" 
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:text="保存"/>
+        
+        <Button 
+            android:id="@+id/map" 
+            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:text="地图"/>
+    </LinearLayout>
+    
+    <TextView 
+        android:id="@+id/id_show_latlng"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="显示经纬度"
+        />
+    
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/ic_launcher" />
+
+</LinearLayout>
