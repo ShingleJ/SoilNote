@@ -4,5 +4,7 @@
     <string name="app_name">SoilNote</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_activity_img_detail_pager">ActivityImgDetailPager</string>
+    <string name="title_activity_activity_map_image_detail">ActivityMapImageDetaill</string>
 
 </resources>
