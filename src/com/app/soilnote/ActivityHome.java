@@ -143,7 +143,7 @@ public class ActivityHome extends Activity implements OnClickListener,
 //		Toast.makeText(this, "第一条数据是：id:"+line.getId()+"文件路径："+line.getImagePath()+
 //				"经度："+line.getLatitude()+"纬度："+line.getLongtitude()+
 //				"地址："+line.getPosition(),Toast.LENGTH_LONG).show();
-		Toast.makeText(context, "怎么回事", Toast.LENGTH_LONG).show();
+		Toast.makeText(context, photo_id+"", Toast.LENGTH_LONG).show();
 	}
 
 	/*
@@ -203,8 +203,11 @@ public class ActivityHome extends Activity implements OnClickListener,
 		int action = event.getAction();
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
+			v.performClick();
 			downx = event.getX();
 			downy = event.getY();
+			canvas.drawPoint(downx, downy, paint);
+			img.invalidate();
 			break;
 		case MotionEvent.ACTION_MOVE:
 			// 路径画板

@@ -6,5 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_activity_img_detail_pager">ActivityImgDetailPager</string>
     <string name="title_activity_activity_map_image_detail">ActivityMapImageDetaill</string>
+    <string name="title_activity_activity_attribute">ActivityAttribute</string>
+    <string name="title_activity_attribute2">Attribute2Activity</string>
 
 </resources>

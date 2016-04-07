@@ -7,14 +7,18 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 public class ActivityMapImageDetail extends Activity {
 
 	private ImageView iv;
+	private Button btn;
 	Bitmap bm;
 	String imagePath;
 	@Override
@@ -22,6 +26,7 @@ public class ActivityMapImageDetail extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map_image_detail);
 		iv = (ImageView) findViewById(R.id.id_map_img_detail);
+		btn = (Button) findViewById(R.id.attribute);
 		Intent intent = getIntent();
 		int id = intent.getIntExtra("id", -1);
 		imagePath = intent.getStringExtra("imagePath");
@@ -36,6 +41,14 @@ public class ActivityMapImageDetail extends Activity {
                 iv.setImageBitmap(bm);
             }  
         });  
+        btn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ActivityMapImageDetail.this, Attribute2Activity.class);
+				startActivity(intent);
+			}
+		});
 	}
 
 	@Override

@@ -1,0 +1,428 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView 
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+        >
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal"
+    	android:background="#404040" >
+        <ImageView 
+            android:id="@+id/arrow_left"
+            android:src="@drawable/arrow_left"
+            android:layout_width="30dp"
+            android:layout_height="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:text="保存"
+            android:textColor="#ffffff" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="剖面编号"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <ImageView 
+            android:id="@+id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="01" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="日期"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="2016-04-06" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="天气"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="小雨" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="调查人"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="杰" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_marginLeft="10dp"
+    	    android:text="地点"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="南京师范大学厚生路" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="205dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="调查人"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="杰" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="地形图幅/航（卫）片号"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="xx" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="土壤俗名"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="黄壤" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="正式定名"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="黄棕壤" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="地形"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="山地" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="海拔高度"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="200m" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="母质类型"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="石灰岩" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="自然植被"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="水杉" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout 
+    	android:layout_width="match_parent"
+    	android:layout_height="40dp"
+    	android:orientation="horizontal" >
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="地形"
+    	    android:layout_marginLeft="10dp"
+    	    android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_toLeftOf="@id/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="山地" />
+        
+        <ImageView 
+            android:id="@id/arrow_right"
+            android:src="@drawable/arrow_right"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+        
+    </RelativeLayout>
+    </ScrollView>
+    
+</LinearLayout>

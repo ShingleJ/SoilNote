@@ -60,8 +60,16 @@
 
         <activity
             android:name=".ActivityMapImageDetail"
-            android:theme="@style/MapImageScale"
-            android:label="@string/title_activity_activity_map_image_detail" >
+            android:label="@string/title_activity_activity_map_image_detail"
+            android:theme="@style/MapImageScale" >
+        </activity>
+        <activity
+            android:name=".ActivityAttribute"
+            android:label="@string/title_activity_activity_attribute" >
+        </activity>
+        <activity
+            android:name=".Attribute2Activity"
+            android:label="@string/title_activity_attribute2" >
         </activity>
     </application>
 

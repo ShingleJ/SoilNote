@@ -4,7 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.app.soilnote.ActivityMapImageDetail" >
-   
+    
+    <Button 
+        android:id="@+id/attribute"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="属性" />
     <ImageView
         android:id="@+id/id_map_img_detail"
         android:layout_width="match_parent"
