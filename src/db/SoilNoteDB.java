@@ -6,10 +6,12 @@ import java.util.List;
 import model.InfoAttrFeat;
 import model.InfoAttrRec;
 import model.InfoGeo;
+import android.R.integer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Point;
 
 /*
  * SoilNoteDB类用于封装一些常用的数据库操作，如
@@ -268,4 +270,34 @@ public class SoilNoteDB {
 		}
 		return list;
 	}	
+	
+	//将Model_1的屏幕坐标存储到数据库中
+	public void saveProfileModel() {
+		ContentValues values = new ContentValues();
+		values.put("XPoint", 0);
+		values.put("YPoint", 50);
+		values.put("IsStart", true);
+		values = new ContentValues();
+		values.put("XPoint", 450);
+		values.put("YPoint", 50);
+		values.put("IsStart", false);
+		db.insert("Model_1", null, values);
+	}
+	
+	public List<Point> loadProfileModel() {
+		List<Point> list = new ArrayList<Point>(); 
+		Cursor cursor = db.query("Model_1", null, null, null, null, null, null);
+		if (cursor.moveToFirst()) {
+			do {
+				int x = cursor.getInt(cursor.getColumnIndex("XPoint"));
+			    int y = cursor.getInt(cursor.getColumnIndex("YPoint"));
+				Point point = new Point(x, y);
+				list.add(point);
+			} while (cursor.moveToNext());
+		}
+		if (cursor != null) {
+			cursor.close();
+		}
+		return list;
+	}
 }

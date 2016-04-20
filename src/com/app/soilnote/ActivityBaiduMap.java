@@ -38,6 +38,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 public class ActivityBaiduMap extends Activity {
@@ -71,9 +72,8 @@ public class ActivityBaiduMap extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO 自动生成的方法存根
 		super.onCreate(savedInstanceState);
-
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.context = this;
 		// 在使用SDK各组件之前初始化context信息，传入applicationContext
 		// 注意该方法在setContentView方法之前实现

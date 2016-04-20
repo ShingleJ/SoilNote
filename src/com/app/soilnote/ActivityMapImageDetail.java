@@ -1,18 +1,28 @@
 package com.app.soilnote;
 
+import java.util.List;
+
+import db.SoilNoteDB;
 import utils.BitmapUtils;
+import utils.DrawModel;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class ActivityMapImageDetail extends Activity {
@@ -21,12 +31,22 @@ public class ActivityMapImageDetail extends Activity {
 	private Button btn;
 	Bitmap bm;
 	String imagePath;
+	
+	// 数据库相关
+	private SoilNoteDB soilNoteDB;
+	List<Point> points;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_map_image_detail);
+		soilNoteDB = SoilNoteDB.getInstance(this);
+		points = soilNoteDB.loadProfileModel();
+		
 		iv = (ImageView) findViewById(R.id.id_map_img_detail);
 		btn = (Button) findViewById(R.id.attribute);
+		
 		Intent intent = getIntent();
 		int id = intent.getIntExtra("id", -1);
 		imagePath = intent.getStringExtra("imagePath");
@@ -50,6 +70,7 @@ public class ActivityMapImageDetail extends Activity {
 			}
 		});
 	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

@@ -32,6 +32,9 @@ public class SoilNoteOpenHelper extends SQLiteOpenHelper {
 			+"erode_stat text, " + "phreatic_level text, " + "water_quality text, "
 			+"landuse text, " + "irrig_drainage text, " + "ferti_stat text, "
 			+"human_effect text, " + "crop_rotat_stat text, " + "yield text, " + "review text)";
+	
+	public static final String CREATE_PROFILE_MODEL = "create table Model_1 (id integer primary key autoincrement, " +
+			"XPoint integer," + "YPoint integer, " + " IsStart integer)";
 
 	public SoilNoteOpenHelper(Context context, String name,
 			CursorFactory factory, int version) {
@@ -43,6 +46,7 @@ public class SoilNoteOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_GEO_INFO);// 创建GeoInfo表
 		db.execSQL(CREATE_FEAT_ATTR_INFO);//创建InfoAttrFeat表
 		db.execSQL(CREATE_REC_ATTR_INFO);//创建InfoAttrRec表
+		db.execSQL(CREATE_PROFILE_MODEL);//创建ProfileModel表
 	}
 
 	@Override
