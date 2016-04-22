@@ -13,6 +13,8 @@ import com.baidu.mapapi.map.BitmapDescriptorFactory;
 
 import db.SoilNoteDB;
 
+import android.R.integer;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -46,6 +48,7 @@ public class ActivityHome extends Activity implements OnClickListener{
 	private final String[] photoSelect_itemStrings = { "拍摄照片", "从文件中选择" };
 	private static final int TAKE_PHOTO = 1;
 	private static final int CHOOSE_PHOTO = 2;
+//	private static final int CROP_PHOTO = 3;
 	
 	private Uri imageUri;
 	private String imageFilePath;
@@ -133,40 +136,22 @@ public class ActivityHome extends Activity implements OnClickListener{
 				Intent intent = new Intent(ActivityHome.this, ActivityEditPhoto.class);
 				intent.putExtra("imageFilePath", imageFilePath);
 				startActivity(intent);
-//				Bitmap bitmap = BitmapUtils.decodeSampledBitmapFromFile(
-//						filePath, img.getWidth(), img.getHeight());
-				// 设置图片
-				// img.setImageBitmap(bitmap);
+				//调用系统裁剪
+//				Intent intent = new Intent("com.android.camera.action.CROP");
+//				intent.setDataAndType(imageUri, "image/*");
+//				intent.putExtra("scale", true);
+//				intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//				startActivityForResult(intent, CROP_PHOTO);
 
-				// Bitmap bm = (Bitmap)
-				// data.getExtras().get("data");//通过这种方式得到的图像数据是经过压缩的，
-				// //所以看到的图像是模糊的
-				// img.setImageBitmap(bm);//将图像显示在ImageView视图上
-
-//				filePath = "";
-				// alterBitmap变量是新建的一个与bitmap图片长宽一致的空白BitMap类型，用于存储绘制的像素
-				
-//				Toast.makeText(this, filePath, Toast.LENGTH_LONG).show();
-//				alterBitmap = Bitmap.createBitmap(img.getWidth(),
-//						img.getHeight(), bitmap.getConfig());
-//				canvas = new Canvas(alterBitmap);
-//				paint = new Paint();
-//				// paint是指画笔
-//				paint.setColor(Color.WHITE);
-//				paint.setStrokeWidth(3);
-//				Matrix matrix = new Matrix();
-//				// 使用指定的matrix绘制位图bitmap，使用canvas绘画，画的东西都存储在了alterBitmap中
-//				canvas.drawBitmap(bitmap, matrix, paint);
-//				canvas.drawLine(0, bitmap.getHeight() * 0.25f,
-//						bitmap.getWidth(), bitmap.getHeight() * 0.25f, paint);
-//				canvas.drawLine(0, bitmap.getHeight() * 0.5f,
-//						bitmap.getWidth(), bitmap.getHeight() * 0.5f, paint);
-//				canvas.drawLine(0, bitmap.getHeight() * 0.75f,
-//						bitmap.getWidth(), bitmap.getHeight() * 0.75f, paint);
-//				img.setImageBitmap(alterBitmap);
-//				img.setOnTouchListener(this);
 			}
 			break;
+//		case CROP_PHOTO:
+//			if (resultCode == RESULT_OK) {
+//				Intent intent = new Intent(ActivityHome.this, ActivityEditPhoto.class);
+//				intent.putExtra("imageFilePath", imageFilePath);
+//				startActivity(intent);
+//			}
+//			break;
 		default:
 			break;
 		}
@@ -197,8 +182,8 @@ public class ActivityHome extends Activity implements OnClickListener{
 		startActivityForResult(localIntent2, TAKE_PHOTO);
 	}
 	
+	@SuppressLint("SimpleDateFormat") 
 	private String getPhotoPath() {
-		// TODO 自动生成的方法存根
 		String mFilePath = "";
 		// 获得最终图片保存的路径
 		String pathStorage = Environment.getExternalStorageDirectory()

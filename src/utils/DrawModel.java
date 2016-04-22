@@ -13,18 +13,21 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
-public class DrawModel extends View{
+public class DrawModel extends ImageView{
 
 	Paint paint,paint2;
-	Canvas canvas;
-	private float one = (float)1280*5/90;
-	private float two = (float)1280*10/90;
-	private float three = (float)1280*25/90;
-	private float four = (float)1280*75/90;
+	
+	private float one = (float)1000*5/90;
+	private float two = (float)1000*10/90;
+	private float three = (float)1000*25/90;
+	private float four = (float)1000*75/90;
 	
 	private float fomalOne = one;
 	private float fomalTwo = two;
@@ -35,18 +38,21 @@ public class DrawModel extends View{
 	
 	public DrawModel(Context context) {
 		super(context);
-		paint = new Paint();
-		paint.setColor(Color.BLACK);
-//		paint.setStrokeCap(Paint.Cap.ROUND);
-//		paint.setStrokeJoin(Paint.Join.ROUND);
-		paint.setStyle(Paint.Style.STROKE);//设置空心
-		paint.setStrokeWidth(3);  
-		paint.setTextSize(24);
-		
-		paint2 = new Paint();
 	}
 	
-	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) @Override
+	public DrawModel(Context context, AttributeSet attrs,  
+            int defStyle) {  
+        super(context, attrs, defStyle);  
+        // TODO Auto-generated constructor stub  
+    }  
+  
+    public DrawModel(Context context, AttributeSet attrs) {  
+        super(context, attrs);  
+        // TODO Auto-generated constructor stub  
+    }  
+	
+	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
+	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (fomalFour-10 < event.getY() && event.getY() < fomalFour + 10) {
 			flag = 4;
@@ -90,9 +96,17 @@ public class DrawModel extends View{
 	
 	@SuppressLint("DrawAllocation") @Override
 	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		this.canvas = canvas;
+		super.onDraw(canvas);  
+		paint = new Paint();
+		paint.setColor(Color.WHITE);
+//		paint.setStrokeCap(Paint.Cap.ROUND);
+//		paint.setStrokeJoin(Paint.Join.ROUND);
+		paint.setStyle(Paint.Style.STROKE);//设置空心
+		paint.setStrokeWidth(3);  
+		paint.setTextSize(24);
+        
 		//枯枝落叶层——O
+		//TODO 这一层图例重新设计
 		for(int i = 0; i<100;i++){
 			float x = (float) (Math.random()*700);
 			float y = (float) (Math.random()*fomalOne);
@@ -118,17 +132,18 @@ public class DrawModel extends View{
 		}  
 		//沉淀层——B
 		Path path = new Path(); //定义一条路径
-		for (int i = (int) fomalThree; i < fomalFour-150; ) {
+		float len = (fomalFour - fomalThree - 60)/4;
+		for (int i = (int) fomalThree; i < fomalFour; ) {
 			for(int j = 40;j<720;){
-				canvas.drawLine(j, i, j, i+150, paint);
-				path.moveTo(j-10, i+140); //移动到 坐标   
-		        path.lineTo(j, i+150);   
-		        path.lineTo(j+10, i+140);   
+				canvas.drawLine(j, i, j, i+len, paint);
+				path.moveTo(j-10, i+len-10); //移动到 坐标   
+		        path.lineTo(j, i+len);   
+		        path.lineTo(j+10, i+len-10);   
 				canvas.drawPath(path, paint);
 				path.reset();
 				j += 50;
 			}
-			i += 190;
+			i += len+20;
 		}
 		//母质质层——C
 		int count = 0;
@@ -147,6 +162,7 @@ public class DrawModel extends View{
 		canvas.drawLine(0f, fomalTwo, 700f, fomalTwo, paint);
 		canvas.drawLine(0f, fomalThree, 700f, fomalThree, paint);
 		canvas.drawLine(0f, fomalFour, 700f, fomalFour, paint);  
+ 
 	}
 
 }

@@ -62,7 +62,6 @@ public class SoilNoteDB {
 	public void saveInfoGeo(InfoGeo infoGeo) {
 		if (infoGeo != null) {
 			ContentValues values = new ContentValues();
-			values.put("id", infoGeo.getId());
 			values.put("imagePath", infoGeo.getImagePath());
 			values.put("latitude", infoGeo.getLatitude());
 			values.put("longtitude", infoGeo.getLongtitude());

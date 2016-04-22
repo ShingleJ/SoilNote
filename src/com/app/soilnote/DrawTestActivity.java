@@ -27,10 +27,10 @@ public class DrawTestActivity extends Activity {
 	private void drawTest() {
         RelativeLayout layout=(RelativeLayout) findViewById(R.id.root);  
         final DrawModel view = new DrawModel(this);  
-        view.setMinimumHeight(500);  
-        view.setMinimumWidth(300);  
+//        view.setMinimumHeight(500);  
+//        view.setMinimumWidth(300);  
         //通知view组件重绘    
-        view.invalidate();  
+//        view.invalidate();  
         layout.addView(view); 
 	}
 
