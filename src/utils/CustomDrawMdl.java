@@ -1,11 +1,13 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.R.integer;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -17,6 +19,9 @@ import android.widget.Toast;
 
 public class CustomDrawMdl extends ImageView{
 
+	private Bitmap bitmap = null;   //用于存储模板
+    private Canvas canvasBitmap;
+    
 	private float downx = 0;
 	private float downy = 0;
 	private float upx = 0;
@@ -36,12 +41,14 @@ public class CustomDrawMdl extends ImageView{
 	public CustomDrawMdl(Context context, AttributeSet attrs,  
             int defStyle) {  
         super(context, attrs, defStyle);  
-        // TODO Auto-generated constructor stub  
     }  
   
     public CustomDrawMdl(Context context, AttributeSet attrs) {  
         super(context, attrs);  
-        // TODO Auto-generated constructor stub  
+        paint = new Paint();
+		paint.setColor(0xff00FECC);
+		paint.setStrokeWidth(3);
+		paint.setAntiAlias(true);
     }  
 	
 	@SuppressLint("ClickableViewAccessibility") 
@@ -64,7 +71,6 @@ public class CustomDrawMdl extends ImageView{
 			pointsY.add(upy);
 			flagList.add(false);
 			invalidate();
-			
 			break;
 			
 		case MotionEvent.ACTION_UP:
@@ -87,15 +93,35 @@ public class CustomDrawMdl extends ImageView{
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas); 
 
-		paint = new Paint();
-		paint.setColor(Color.RED);
-		paint.setStrokeWidth(3);
-
+		bitmap = Bitmap.createBitmap(720, 1038, Bitmap.Config.ARGB_8888);
+        canvasBitmap = new Canvas(bitmap);
+        
 		for (int i = 0; i < pointsX.size()-1; i++) {//注意这边是size-1
 			if (flagList.get(i)) {
 				i++;
 			}
-			canvas.drawLine(pointsX.get(i), pointsY.get(i), pointsX.get(i+1), pointsY.get(i+1), paint);
+			canvasBitmap.drawLine(pointsX.get(i), pointsY.get(i), pointsX.get(i+1), pointsY.get(i+1), paint);
 		}
+		
+		canvas.drawBitmap(bitmap, 0, 0 , paint);
+	}
+	
+	public void unDo() {
+		for (int i = pointsX.size()-1;i>=0; i--) {
+			pointsX.remove(i);
+			pointsY.remove(i);
+			flagList.remove(i);
+			if (i>0&&flagList.get(i-1)) {
+				break;
+			}
+		}
+		invalidate();
+	}
+	
+	public void clearDrawMdl() {
+		pointsX.clear();
+		pointsY.clear();
+		flagList.clear();
+		invalidate();
 	}
 }

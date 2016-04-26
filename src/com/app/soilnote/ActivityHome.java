@@ -9,6 +9,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import utils.BitmapUtils;
 import utils.RoundBitmap;
 
+import com.app.soilnote.R.attr;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 
 import db.SoilNoteDB;
@@ -101,7 +102,7 @@ public class ActivityHome extends Activity implements OnClickListener{
 			startActivity(intent);
 			break;
 		case R.id.learn_more:
-			Intent intent2 = new Intent(this, DrawTestActivity.class);
+			Intent intent2 = new Intent(this, Attribute2Activity.class);
 			startActivity(intent2);
 			break;
 		default:

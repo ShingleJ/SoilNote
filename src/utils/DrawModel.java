@@ -1,28 +1,28 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.Random;
+import com.app.soilnote.R;
 
-import com.baidu.platform.comapi.map.x;
-
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PointF;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 
 public class DrawModel extends ImageView{
 
-	Paint paint,paint2;
+	private Paint paint = new Paint();
+	private Bitmap bitmap = null;   //用于存储模板
+    private Canvas canvasBitmap;
+    
+    private int width, height;
 	
 	private float one = (float)1000*5/90;
 	private float two = (float)1000*10/90;
@@ -43,12 +43,10 @@ public class DrawModel extends ImageView{
 	public DrawModel(Context context, AttributeSet attrs,  
             int defStyle) {  
         super(context, attrs, defStyle);  
-        // TODO Auto-generated constructor stub  
     }  
   
     public DrawModel(Context context, AttributeSet attrs) {  
         super(context, attrs);  
-        // TODO Auto-generated constructor stub  
     }  
 	
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
@@ -97,25 +95,31 @@ public class DrawModel extends ImageView{
 	@SuppressLint("DrawAllocation") @Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);  
-		paint = new Paint();
+		
+		bitmap = Bitmap.createBitmap(720, 1038, Bitmap.Config.ARGB_8888);
+        canvasBitmap = new Canvas(bitmap);
+        
+		width = canvas.getWidth();
+		height = canvas.getHeight();
+
 		paint.setColor(Color.WHITE);
-//		paint.setStrokeCap(Paint.Cap.ROUND);
-//		paint.setStrokeJoin(Paint.Join.ROUND);
 		paint.setStyle(Paint.Style.STROKE);//设置空心
 		paint.setStrokeWidth(3);  
 		paint.setTextSize(24);
-        
+		
+		setImageResource(R.drawable.transparent_backgroud_frame);
+		 
 		//枯枝落叶层——O
 		//TODO 这一层图例重新设计
 		for(int i = 0; i<100;i++){
-			float x = (float) (Math.random()*700);
+			float x = (float) (Math.random()*width);
 			float y = (float) (Math.random()*fomalOne);
-			canvas.drawPoint(x, y, paint);
+			canvasBitmap.drawPoint(x, y, paint);
 		}
 		//腐殖质层——A
 		for(int i = (int) (fomalOne + 25); i<fomalTwo;){
-			for(int j = 1;j<720;){
-				canvas.drawText("×", j, i, paint);
+			for(int j = 1;j<width;){
+				canvasBitmap.drawText("×", j, i, paint);
 				j += 40;
 			}
 			i += 30;
@@ -123,9 +127,9 @@ public class DrawModel extends ImageView{
 		//过渡层——AB
 		RectF rect = new RectF(0, 0, 0, 0);
 		for(int i = (int) (fomalTwo);i<fomalThree-50;){
-			for(int j = 1;j<720-35;){
+			for(int j = 1;j<width-35;){
 				rect.set(j, i, j+50, i+50);
-				canvas.drawArc(rect, 45, 90, false, paint);
+				canvasBitmap.drawArc(rect, 45, 90, false, paint);
 				j += 35;
 			}
 			i += 50;
@@ -134,12 +138,12 @@ public class DrawModel extends ImageView{
 		Path path = new Path(); //定义一条路径
 		float len = (fomalFour - fomalThree - 60)/4;
 		for (int i = (int) fomalThree; i < fomalFour; ) {
-			for(int j = 40;j<720;){
-				canvas.drawLine(j, i, j, i+len, paint);
+			for(int j = 40;j<width;){
+				canvasBitmap.drawLine(j, i, j, i+len, paint);
 				path.moveTo(j-10, i+len-10); //移动到 坐标   
 		        path.lineTo(j, i+len);   
 		        path.lineTo(j+10, i+len-10);   
-				canvas.drawPath(path, paint);
+		        canvasBitmap.drawPath(path, paint);
 				path.reset();
 				j += 50;
 			}
@@ -149,20 +153,28 @@ public class DrawModel extends ImageView{
 		int count = 0;
 		int j;
 		for(int i = (int) (fomalFour);i<1280-20;){
-			canvas.drawLine(0,i, 720, i, paint);
+			canvasBitmap.drawLine(0,i, width, i, paint);
 			j = (count%2==0)?50:0;
-			for(;j<720;){
-				canvas.drawLine(j, i, j, i+20, paint);
+			for(;j<width;){
+				canvasBitmap.drawLine(j, i, j, i+20, paint);
 				j+=100;
 			}
 			count++;
 			i+=40;
 		}
-		canvas.drawLine(0f, fomalOne, 700f, fomalOne, paint);
-		canvas.drawLine(0f, fomalTwo, 700f, fomalTwo, paint);
-		canvas.drawLine(0f, fomalThree, 700f, fomalThree, paint);
-		canvas.drawLine(0f, fomalFour, 700f, fomalFour, paint);  
- 
+		canvasBitmap.drawLine(0f, fomalOne, width, fomalOne, paint);
+		canvasBitmap.drawLine(0f, fomalTwo, width, fomalTwo, paint);
+		canvasBitmap.drawLine(0f, fomalThree, width, fomalThree, paint);
+		canvasBitmap.drawLine(0f, fomalFour, width, fomalFour, paint);  
+		
+		canvas.drawBitmap(bitmap, 0, 0 , paint);
 	}
-
+	
+	public Bitmap getProModelBitmap() {
+		if (bitmap != null) {
+			return bitmap;
+		}else {
+			return null;
+		}
+	}
 }

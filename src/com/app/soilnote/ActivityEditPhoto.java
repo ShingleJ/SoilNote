@@ -37,6 +37,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -66,7 +68,7 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 	private String imageFilePath;
 	private Bitmap bm;
 
-	private Button saveButton, chsModelButton, cusDrawButton, saveEditButton;
+	private Button saveButton, chsModelButton, cusDrawButton, saveEditButton, cusDrawBackButton;
 	private ImageView img;
 	private CustomDrawMdl cusDrawMdl;
 	private DrawModel drawModel;
@@ -108,6 +110,8 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 		chsModelButton = (Button) findViewById(R.id.choose_model);
 		cusDrawButton = (Button) findViewById(R.id.custom_draw);
 		saveEditButton = (Button) findViewById(R.id.save_edit);
+		cusDrawBackButton = (Button) findViewById(R.id.save_edit_back);
+		
 	    img = (ImageView) findViewById(R.id.id_orig_img);
 	    ViewTreeObserver vto = img.getViewTreeObserver();  
 		vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
@@ -126,9 +130,10 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 		chsModelButton.setOnClickListener(this);
 		cusDrawButton.setOnClickListener(this);
 		saveEditButton.setOnClickListener(this);
+		cusDrawBackButton.setOnClickListener(this);
 	}
 
-	@Override
+	@SuppressLint("NewApi") @Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.id_save:
@@ -141,12 +146,16 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			drawModel.setVisibility(View.VISIBLE);
 			ViewTreeObserver vto = drawModel.getViewTreeObserver();  
 			vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
-				@Override  
+				@SuppressLint("NewApi") @Override  
 				public void onGlobalLayout() {  
 					drawModel.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
 					//TODO 判断id是否相同
 					bm = BitmapUtils.decodeSampledBitmapFromFile(imageFilePath, drawModel.getWidth(),drawModel.getHeight());
-					drawModel.setImageBitmap(bm);
+//					drawModel.setImageBitmap(bm);
+					//把图片设为背景
+					Drawable drawable = new BitmapDrawable(bm); 
+					drawModel.setBackground(drawable);      
+//					drawModel.setImageResource(R.drawable.transparent_backgroud_frame);
 				}  
 			}); 
 			break;
@@ -162,30 +171,19 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 						cusDrawMdl.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
 						//TODO 判断id是否相同
 						bm = BitmapUtils.decodeSampledBitmapFromFile(imageFilePath, cusDrawMdl.getWidth(),cusDrawMdl.getHeight());
-						cusDrawMdl.setImageBitmap(bm);
+//						cusDrawMdl.setImageBitmap(bm);
+						//把图片设为背景
+						Drawable drawable = new BitmapDrawable(bm); 
+						cusDrawMdl.setBackground(drawable);    
+						cusDrawMdl.setImageResource(R.drawable.transparent_backgroud_frame);
 					}  
 				}); 
-//			try {
-//				bitMap = BitmapFactory.decodeStream(getContentResolver().openInputStream(Uri.fromFile(new File(imageFilePath))));
-//			} catch (FileNotFoundException e) {
-//				// TODO 自动生成的 catch 块
-//				e.printStackTrace();
-//			}
-////			alterBitmap = Bitmap.createBitmap(cusDrawMdl.getWidth(),
-////					cusDrawMdl.getHeight(), bitMap.getConfig());
-//			canvas = new Canvas(bm);
-//			paint = new Paint();
-//			paint.setColor(Color.WHITE);
-//			paint.setStrokeWidth(3);
-//			Matrix matrix = new Matrix();
-//			// 使用指定的matrix绘制位图bitmap，使用canvas绘画，画的东西都存储在了alterBitmap中
-//			canvas.drawBitmap(bm, matrix, paint);
-//			cusDrawMdl.setImageBitmap(bm);
-//			cusDrawMdl.setOnTouchListener(this);
 			break;
 		case R.id.save_edit:
 			saveBitmap();
 			break;
+		case R.id.save_edit_back:
+			cusDrawMdl.unDo();
 		default:
 			break;
 		}
@@ -244,48 +242,6 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 		mLocationClient.stop();
 	}
 
-//	/*
-//	 * 绘图相关
-//	 */
-//	private float downx = 0;
-//	private float downy = 0;
-//	private float upx = 0;
-//	private float upy = 0;
-//
-//	@Override
-//	public boolean onTouch(View v, MotionEvent event) {
-//		int action = event.getAction();
-//		switch (action) {
-//		case MotionEvent.ACTION_DOWN:
-//			v.performClick();
-//			downx = event.getX();
-//			downy = event.getY();
-//			canvas.drawPoint(downx, downy, paint);
-//			cusDrawMdl.invalidate();
-//			break;
-//		case MotionEvent.ACTION_MOVE:
-//			// 路径画板
-//			upx = event.getX();
-//			upy = event.getY();
-//			canvas.drawLine(downx, downy, upx, upy, paint);
-//			cusDrawMdl.invalidate();
-//			downx = upx;
-//			downy = upy;
-//			break;
-//		case MotionEvent.ACTION_UP:
-//			// 直线画板
-//			upx = event.getX();
-//			upy = event.getY();
-//			canvas.drawLine(downx, downy, upx, upy, paint);
-//			cusDrawMdl.invalidate();// 刷新，强制重绘
-//			break;
-//
-//		default:
-//			break;
-//		}
-//		return true;
-//	}
-	
 	 /**  
      * 保存图片到SD卡上  
      */ 
@@ -297,8 +253,9 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
             //将ImageView中的图片转换成Bitmap
             Bitmap bitmap = null;
             if (flag == CHOOSE_MODEL) {
-            	drawModel.buildDrawingCache();
-                bitmap = drawModel.getDrawingCache();
+//            	drawModel.buildDrawingCache();
+//                bitmap = drawModel.getDrawingCache();
+            	bitmap = drawModel.getProModelBitmap();
 			}else if (flag == CUSTOM_DRAW) {
 				cusDrawMdl.buildDrawingCache();
 				bitmap = cusDrawMdl.getDrawingCache();
