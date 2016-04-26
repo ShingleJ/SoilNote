@@ -4,7 +4,7 @@ import java.util.List;
 
 import db.SoilNoteDB;
 import utils.BitmapUtils;
-import utils.DrawModel;
+import utils.MontainYelloSoilOne;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;

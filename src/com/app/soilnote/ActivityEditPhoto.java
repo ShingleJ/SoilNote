@@ -19,42 +19,30 @@ import db.SoilNoteDB;
 
 import utils.BitmapUtils;
 import utils.CustomDrawMdl;
-import utils.DrawModel;
+import utils.MontainBrownSoil;
+import utils.MontainYelloBrownSoil;
+import utils.MontainYelloSoilOne;
+import utils.MontainYelloSoilThree;
+import utils.MontainYelloSoilTwo;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.TextView.OnEditorActionListener;
 
 public class ActivityEditPhoto extends Activity implements OnClickListener{
 
@@ -62,18 +50,18 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 	private Bitmap alterBitmap;
 	private boolean hasImage; // 是否已经选择了图片
 
-	private Paint paint;
-	private Canvas canvas;
-
 	private String imageFilePath;
 	private Bitmap bm;
 
 	private Button saveButton, chsModelButton, cusDrawButton, saveEditButton, cusDrawBackButton;
 	private ImageView img;
 	private CustomDrawMdl cusDrawMdl;
-	private DrawModel drawModel;
-
-	private Context context;
+	private MontainYelloSoilOne montainYelloSoilOne;
+	private MontainYelloSoilTwo montainYelloSoilTwo ;
+	private MontainBrownSoil montainBrownSoil;
+	private MontainYelloSoilThree montainYelloSoilThree;
+	private MontainYelloBrownSoil montainYelloBrownSoil;
+//	private  ;
 	
 	private final int CHOOSE_MODEL = 0;
 	private final int CUSTOM_DRAW = 1;
@@ -91,7 +79,7 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.context = this;
+//		this.context = this;
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_edit_photo);
 		Intent intent = getIntent();
@@ -123,7 +111,8 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 				img.setImageBitmap(bm);
 			}  
 		}); 
-		drawModel = (DrawModel) findViewById(R.id.id_chs_mdl);
+//		montainYelloSoilThree = (montainYelloSoilThree) findViewById(R.id.id_chs_mdl);
+		montainBrownSoil = (MontainBrownSoil) findViewById(R.id.id_chs_mdl);
 		cusDrawMdl = (CustomDrawMdl) findViewById(R.id.id_cus_draw);
 		
 		saveButton.setOnClickListener(this);
@@ -143,26 +132,26 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			flag = CHOOSE_MODEL;
 			img.setVisibility(View.GONE);
 			cusDrawMdl.setVisibility(View.GONE);
-			drawModel.setVisibility(View.VISIBLE);
-			ViewTreeObserver vto = drawModel.getViewTreeObserver();  
+			montainBrownSoil.setVisibility(View.VISIBLE);
+			ViewTreeObserver vto = montainBrownSoil.getViewTreeObserver();  
 			vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
 				@SuppressLint("NewApi") @Override  
 				public void onGlobalLayout() {  
-					drawModel.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
+					montainBrownSoil.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
 					//TODO 判断id是否相同
-					bm = BitmapUtils.decodeSampledBitmapFromFile(imageFilePath, drawModel.getWidth(),drawModel.getHeight());
-//					drawModel.setImageBitmap(bm);
+					bm = BitmapUtils.decodeSampledBitmapFromFile(imageFilePath, montainBrownSoil.getWidth(),montainBrownSoil.getHeight());
+//					montainBrownSoil.setImageBitmap(bm);
 					//把图片设为背景
 					Drawable drawable = new BitmapDrawable(bm); 
-					drawModel.setBackground(drawable);      
-//					drawModel.setImageResource(R.drawable.transparent_backgroud_frame);
+					montainBrownSoil.setBackground(drawable);      
+//					montainBrownSoil.setImageResource(R.drawable.transparent_backgroud_frame);
 				}  
 			}); 
 			break;
 		case R.id.custom_draw:
 			flag = CUSTOM_DRAW;
 			img.setVisibility(View.GONE);
-			drawModel.setVisibility(View.GONE);
+			montainBrownSoil.setVisibility(View.GONE);
 			cusDrawMdl.setVisibility(View.VISIBLE);
 			 ViewTreeObserver vto1 = cusDrawMdl.getViewTreeObserver();  
 			 vto1.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
@@ -253,9 +242,9 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
             //将ImageView中的图片转换成Bitmap
             Bitmap bitmap = null;
             if (flag == CHOOSE_MODEL) {
-//            	drawModel.buildDrawingCache();
-//                bitmap = drawModel.getDrawingCache();
-            	bitmap = drawModel.getProModelBitmap();
+//            	montainBrownSoil.buildDrawingCache();
+//                bitmap = montainBrownSoil.getDrawingCache();
+            	bitmap = montainBrownSoil.getProModelBitmap();
 			}else if (flag == CUSTOM_DRAW) {
 				cusDrawMdl.buildDrawingCache();
 				bitmap = cusDrawMdl.getDrawingCache();
