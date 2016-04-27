@@ -11,24 +11,28 @@ import android.widget.ImageView;
 public class BaseProfileModel extends ImageView{
   
 	//protected：可以被子类访问，也是默认修饰符
-	protected Paint paint = new Paint();
+	protected Paint paint;
 	protected Bitmap bitmap = null;   //用于存储模板
 	protected Canvas canvasBitmap;
 	
 	protected int width, height;
     
-	protected float one = (float)1038*5/60;
-	protected float two = (float)1038*10/60;
-	protected float three = (float)1038*20/60;
-	protected float four = (float)1038*30/60;
-	
-	float[] fmlLines = {0, one, two, three, four, 1038};
-    boolean[] isDraw = {true, true, true, true, true};
+	float[] fmlLines;
+	boolean[] isDraw;
     
     protected int flag;
     
-    public BaseProfileModel(Context context, AttributeSet attrs) {  
+    public BaseProfileModel(Context context, AttributeSet attrs, float[] lines) {  
         super(context, attrs);  
+        fmlLines = new float[lines.length];
+        isDraw = new boolean[lines.length-1];
+        for (int i = 0; i < lines.length; i++) {
+        	fmlLines[i] = lines[i];
+		}
+        for (int i = 0; i < lines.length-1; i++) {
+        	isDraw[i] = true;
+		}
+        paint = new Paint();
 		paint.setColor(Color.WHITE);
 		paint.setStyle(Paint.Style.STROKE);//设置空心
 		paint.setStrokeWidth(3);  

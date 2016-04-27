@@ -6,73 +6,48 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.ImageView;
 
-public class MontainYelloBrownSoil extends ImageView{
-	private Paint paint = new Paint();
-	private Bitmap bitmap = null;   //用于存储模板
-    private Canvas canvasBitmap;
-    
-    private int width, height;
+public class MontainYelloBrownSoil extends BaseProfileModel{
+
+	private static float one = (float)1038*5/80;
+	private static float two = (float)1038*20/80;
+	private static float three = (float)1038*60/80;
 	
-	private float one = (float)1038*5/80;
-	private float two = (float)1038*20/80;
-	private float three = (float)1038*60/80;
-	
-	private float fmlOne = one;
-	private float fmlTwo = two;
-	private float fmlThree = three;
-	
-	private int flag;
-	
-	public MontainYelloBrownSoil(Context context) {
-		super(context);
-	}
-	
-	public MontainYelloBrownSoil(Context context, AttributeSet attrs,  
-            int defStyle) {  
-        super(context, attrs, defStyle);  
-    }  
+	private static float[] lines = {0, one, two, three, 1038};
   
 	//这一个构造函数是必须的
     public MontainYelloBrownSoil(Context context, AttributeSet attrs) {  
-        super(context, attrs);
-		paint.setColor(Color.WHITE);
-		paint.setStyle(Paint.Style.STROKE);//设置空心
-		paint.setStrokeWidth(3);  
-		paint.setTextSize(30);
+        super(context, attrs, lines);
     }  
 	
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (fmlThree-10 < event.getY() && event.getY() < fmlThree + 10) {
+		if (fmlLines[3]-10 < event.getY() && event.getY() < fmlLines[3] + 10) {
 			flag = 3;
-		}else if (fmlTwo-10 < event.getY() && event.getY() < fmlTwo + 10) {
+		}else if (fmlLines[2]-10 < event.getY() && event.getY() < fmlLines[2] + 10) {
 			flag = 2;
-		}else if (fmlOne-10 < event.getY() && event.getY() < fmlOne + 10){
+		}else if (fmlLines[1]-10 < event.getY() && event.getY() < fmlLines[1] + 10){
 			flag = 1;
 		}
 		switch (flag) {
 		case 3:
-			if (event.getY()> fmlTwo+20 && event.getY()<1038-20) {
-				fmlThree = event.getY();
+			if (event.getY()> fmlLines[2]+20 && event.getY()<1038-20) {
+				fmlLines[3] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
 		case 2:
-			if (event.getY()> fmlOne+20 && event.getY()<fmlThree-20) {
-				fmlTwo = event.getY();
+			if (event.getY()> fmlLines[1]+20 && event.getY()<fmlLines[3]-20) {
+				fmlLines[2] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
 		case 1:
-			if (event.getY()> 20 && event.getY()<fmlTwo-20) {
-				fmlOne = event.getY();
+			if (event.getY()> 20 && event.getY()<fmlLines[2]-20) {
+				fmlLines[1] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
@@ -94,37 +69,41 @@ public class MontainYelloBrownSoil extends ImageView{
 		
 		setImageResource(R.drawable.transparent_backgroud_frame);
 		 
-		//枯枝落叶层——O
-		DrawLegend.DrawProfileO(canvasBitmap, paint, width, fmlOne);
+		if (isDraw[0]) {
+			//枯枝落叶层——O
+			DrawLegend.DrawProfileO(canvasBitmap, paint, width, fmlLines[1]);
+		}
+		if (isDraw[1]) {
+			//腐殖质层——A
+			DrawLegend.DrawProfileA(canvasBitmap, paint, width, fmlLines[1], fmlLines[2]);
+			canvasBitmap.drawLine(0f, fmlLines[1], width, fmlLines[1], paint);
+		}
+		if (isDraw[2]) {
+			//沉淀层——B
+			DrawLegend.DrawProfileB(canvasBitmap, paint, width, fmlLines[2], fmlLines[3]);
+			canvasBitmap.drawLine(0f, fmlLines[2], width, fmlLines[2], paint);
+		}
+		if (isDraw[3]) {
+			//母质质层——C
+			DrawLegend.DrawProfileC(canvasBitmap, paint, width, fmlLines[3], height);
+			canvasBitmap.drawLine(0f, fmlLines[3], width, fmlLines[3], paint);
+		}
 		
-		//腐殖质层——A
-		DrawLegend.DrawProfileA(canvasBitmap, paint, width, fmlOne, fmlTwo);
-		
-		//沉淀层——B
-		DrawLegend.DrawProfileB(canvasBitmap, paint, width, fmlTwo, fmlThree);
-		
-		//母质质层——C
-		DrawLegend.DrawProfileC(canvasBitmap, paint, width, fmlThree, height);
-		
-		canvasBitmap.drawText("O", 650, fmlOne/2, paint);
-		canvasBitmap.drawText("A", 650, (fmlOne+fmlTwo)/2, paint);
-		canvasBitmap.drawText("B", 650, (fmlTwo+fmlThree)/2, paint);
-		canvasBitmap.drawText("C", 650, (fmlThree+height)/2, paint);
-		
-		canvasBitmap.drawLine(0f, fmlOne, width, fmlOne, paint);
-		canvasBitmap.drawLine(0f, fmlTwo, width, fmlTwo, paint);
-		canvasBitmap.drawLine(0f, fmlThree, width, fmlThree, paint);
+//		canvasBitmap.drawText("O", 650, fmlLines[1]/2, paint);
+//		canvasBitmap.drawText("A", 650, (fmlLines[1]+fmlLines[2])/2, paint);
+//		canvasBitmap.drawText("B", 650, (fmlLines[2]+fmlLines[3])/2, paint);
+//		canvasBitmap.drawText("C", 650, (fmlLines[3]+height)/2, paint);
 		
 		canvasBitmap.drawLine(600, 0, 600, 1038, paint);
 		
 		canvas.drawBitmap(bitmap, 0, 0 , paint);
 	}
 	
-	public Bitmap getProModelBitmap() {
-		if (bitmap != null) {
-			return bitmap;
-		}else {
-			return null;
-		}
-	}
+//	public Bitmap getProModelBitmap() {
+//		if (bitmap != null) {
+//			return bitmap;
+//		}else {
+//			return null;
+//		}
+//	}
 }

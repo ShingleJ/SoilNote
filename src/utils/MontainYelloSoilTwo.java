@@ -12,86 +12,61 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-public class MontainYelloSoilTwo extends ImageView{
+public class MontainYelloSoilTwo extends BaseProfileModel{
 
-	private Paint paint = new Paint();
-	private Bitmap bitmap = null;   //用于存储模板
-    private Canvas canvasBitmap;
-    
-    private int width, height;
+	private static float one = (float)1038*5/90;
+	private static float two = (float)1038*10/90;
+	private static float three = (float)1038*20/90;
+	private static float four = (float)1038*40/90;
+	private static float five = (float)1038*50/90;
 	
-	private float one = (float)1038*5/90;
-	private float two = (float)1038*10/90;
-	private float three = (float)1038*20/90;
-	private float four = (float)1038*40/90;
-	private float five = (float)1038*50/90;
+	private static float[] lines = {0, one, two, three, four, five, 1038};
 	
-	private float fmlOne = one;
-	private float fmlTwo = two;
-	private float fmlThree = three;
-	private float fmlFour = four;
-	private float fmlFive = five;
-	
-	private int flag;
-	
-	public MontainYelloSoilTwo(Context context) {
-		super(context);
-	}
-	
-	public MontainYelloSoilTwo(Context context, AttributeSet attrs,  
-            int defStyle) {  
-        super(context, attrs, defStyle);  
-    }  
-  
     public MontainYelloSoilTwo(Context context, AttributeSet attrs) {  
-        super(context, attrs);  
-		paint.setColor(Color.WHITE);
-		paint.setStyle(Paint.Style.STROKE);//设置空心
-		paint.setStrokeWidth(3);  
-		paint.setTextSize(30);
+        super(context, attrs, lines);  
     }  
 	
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (fmlFour-10 < event.getY() && event.getY() < fmlFour + 10) {
+		if (fmlLines[4]-10 < event.getY() && event.getY() < fmlLines[4] + 10) {
 			flag = 4;
-		}else if (fmlThree-10 < event.getY() && event.getY() < fmlThree + 10) {
+		}else if (fmlLines[3]-10 < event.getY() && event.getY() < fmlLines[3] + 10) {
 			flag = 3;
-		}else if (fmlTwo-10 < event.getY() && event.getY() < fmlTwo + 10) {
+		}else if (fmlLines[2]-10 < event.getY() && event.getY() < fmlLines[2] + 10) {
 			flag = 2;
-		}else if (fmlOne-10 < event.getY() && event.getY() < fmlOne + 10){
+		}else if (fmlLines[1]-10 < event.getY() && event.getY() < fmlLines[1] + 10){
 			flag = 1;
-		}else if (fmlFive-10<event.getY() && event.getY() <fmlFive +10){
+		}else if (fmlLines[5]-10<event.getY() && event.getY() <fmlLines[5] +10){
 			flag = 5;
 		}
 		switch (flag) {
 		case 5:
-			if (event.getY()>fmlFour+20 && event.getY()<1038) {
-				fmlFive = event.getY();
+			if (event.getY()>fmlLines[4]+20 && event.getY()<1038) {
+				fmlLines[5] = event.getY();
 				invalidate();
 			}
 		case 4:
-			if (event.getY()> fmlThree+20 && event.getY()<fmlFive-20) {
-				fmlFour = event.getY();
+			if (event.getY()> fmlLines[3]+20 && event.getY()<fmlLines[5]-20) {
+				fmlLines[4] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
 		case 3:
-			if (event.getY()> fmlTwo+20 && event.getY()<fmlFour-20) {
-				fmlThree = event.getY();
+			if (event.getY()> fmlLines[2]+20 && event.getY()<fmlLines[4]-20) {
+				fmlLines[3] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
 		case 2:
-			if (event.getY()> fmlOne+20 && event.getY()<fmlThree-20) {
-				fmlTwo = event.getY();
+			if (event.getY()> fmlLines[1]+20 && event.getY()<fmlLines[3]-20) {
+				fmlLines[2] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
 		case 1:
-			if (event.getY()> 20 && event.getY()<fmlTwo-20) {
-				fmlOne = event.getY();
+			if (event.getY()> 20 && event.getY()<fmlLines[2]-20) {
+				fmlLines[1] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
@@ -113,43 +88,35 @@ public class MontainYelloSoilTwo extends ImageView{
 		
 		setImageResource(R.drawable.transparent_backgroud_frame);
 		 
-		//枯枝落叶层——O
-		//TODO 这一层图例重新设计
-		DrawLegend.DrawProfileO(canvasBitmap, paint, width, fmlOne);
-		
-		//腐殖质层——A
-		DrawLegend.DrawProfileA(canvasBitmap, paint, width, fmlOne, fmlTwo);
-		
-		//过渡层——AB
-		DrawLegend.DrawProfileAB(canvasBitmap, paint, width, fmlTwo, fmlThree);
-		
-		//沉淀层——B
-		DrawLegend.DrawProfileB(canvasBitmap, paint, width, fmlThree, fmlFour);
-		
-		//母质质层——C1
-//		int gap = width/10;
-//		for(int i = 0;i<=width-gap;){
-//			canvasBitmap.drawLine(i+gap, fmlFour, i, fmlFive, paint);
-//			i += gap;
-//		}
-		DrawLegend.DrawProfileC1(canvasBitmap, paint, width, fmlFour, fmlFive);
-		
-		//母质质层——C2
-		DrawLegend.DrawProfileC(canvasBitmap, paint, width, fmlFive, height);
-		
-		canvasBitmap.drawText("O", 650, fmlOne/2, paint);
-		canvasBitmap.drawText("A", 650, (fmlOne+fmlTwo)/2, paint);
-		canvasBitmap.drawText("AB", 650, (fmlThree+fmlTwo)/2, paint);
-		canvasBitmap.drawText("B", 650, (fmlThree+fmlFour)/2, paint);
-		canvasBitmap.drawText("C1", 650, (fmlFour+fmlFive)/2, paint);
-		canvasBitmap.drawText("C2", 650, (fmlFive+1038)/2, paint);
-		
-		canvasBitmap.drawLine(0f, fmlOne, width, fmlOne, paint);
-		canvasBitmap.drawLine(0f, fmlTwo, width, fmlTwo, paint);
-		canvasBitmap.drawLine(0f, fmlThree, width, fmlThree, paint);
-		canvasBitmap.drawLine(0f, fmlFour, width, fmlFour, paint);  
-		canvasBitmap.drawLine(0f, fmlFive, width, fmlFive, paint);
-		
+		if (isDraw[0]) {
+			//枯枝落叶层——O
+			DrawLegend.DrawProfileO(canvasBitmap, paint, width, fmlLines[1]);
+		}
+		if (isDraw[1]) {
+			//腐殖质层——A
+			DrawLegend.DrawProfileA(canvasBitmap, paint, width, fmlLines[1], fmlLines[2]);
+			canvasBitmap.drawLine(0f, fmlLines[1], width, fmlLines[1], paint);
+		}
+		if (isDraw[2]) {
+			//过渡层——AB
+			DrawLegend.DrawProfileAB(canvasBitmap, paint, width, fmlLines[2], fmlLines[3]);
+			canvasBitmap.drawLine(0f, fmlLines[2], width, fmlLines[2], paint);
+		}
+		if (isDraw[3]) {
+			//沉淀层——B
+			DrawLegend.DrawProfileB(canvasBitmap, paint, width, fmlLines[3], fmlLines[4]);
+			canvasBitmap.drawLine(0f, fmlLines[3], width, fmlLines[3], paint);
+		}
+		if (isDraw[4]) {
+			//母质质层——C1
+			DrawLegend.DrawProfileC1(canvasBitmap, paint, width, fmlLines[4], fmlLines[5]);
+			canvasBitmap.drawLine(0f, fmlLines[4], width, fmlLines[4], paint);  
+		}
+		if (isDraw[5]) {
+			//母质质层——C2
+			DrawLegend.DrawProfileC(canvasBitmap, paint, width, fmlLines[5], height);
+			canvasBitmap.drawLine(0f, fmlLines[5], width, fmlLines[5], paint);
+		}
 		canvasBitmap.drawLine(600, 0, 600, 1038, paint);
 		
 		canvas.drawBitmap(bitmap, 0, 0 , paint);

@@ -10,29 +10,17 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 public class MontainBrownSoil extends BaseProfileModel{
+	
+	private static float one = (float)1038*5/60;
+	private static float two = (float)1038*10/60;
+	private static float three = (float)1038*20/60;
+	private static float four = (float)1038*30/60;
 
-//	private Bitmap bitmap = null;   //用于存储模板
-//    private Canvas canvasBitmap;
-    
-//    private int width, height;
-	
-//	private float one = (float)1038*5/60;
-//	private float two = (float)1038*10/60;
-//	private float three = (float)1038*20/60;
-//	private float four = (float)1038*30/60;
-//	
-//	float[] fmlLines = {0, one, two, three, four, 1038};
-//	boolean[] isDraw = {true, true, true, true, true};
-	
-//	private int flag;
+	private static float[] lines = {0, one, two, three, four, 1038};
   
 	//这一个构造函数是必须的
     public MontainBrownSoil(Context context, AttributeSet attrs) {  
-        super(context, attrs);  
-//		paint.setColor(Color.WHITE);
-//		paint.setStyle(Paint.Style.STROKE);//设置空心
-//		paint.setStrokeWidth(3);  
-//		paint.setTextSize(30);
+        super(context, attrs, lines); 
     }  
 	
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
@@ -123,25 +111,4 @@ public class MontainBrownSoil extends BaseProfileModel{
 		
 		canvas.drawBitmap(bitmap, 0, 0 , paint);
 	}
-	
-//	public Bitmap getProModelBitmap() {
-//		if (bitmap != null) {
-//			return bitmap;
-//		}else {
-//			return null;
-//		}
-//	}
-//	
-//	int num =  0;
-//	public void deleteProfile(int n) {
-//		isDraw[n-1+num] = false;
-//		if (num<isDraw.length-1) {
-//			num++;
-//		}
-//		for(int i = fmlLines.length-1; i>=n;i--){
-//			fmlLines[i] = fmlLines[i-1];
-//		}
-//		invalidate();
-//	}
-
 }

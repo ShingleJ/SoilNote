@@ -54,7 +54,7 @@
         android:layout_weight="1"
         android:visibility="gone" />
     
-    <utils.MontainBrownSoil
+    <utils.MontainYelloSoilTwo
         android:id="@+id/id_chs_mdl"
         android:src="@drawable/transparent_backgroud_frame"
         android:layout_width="match_parent"
