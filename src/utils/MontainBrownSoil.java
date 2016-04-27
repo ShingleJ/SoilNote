@@ -29,12 +29,8 @@ public class MontainBrownSoil extends ImageView{
 	private float three = (float)1038*20/60;
 	private float four = (float)1038*30/60;
 	
-	private float fmlOne = one;
-	private float fmlTwo = two;
-	private float fmlThree = three;
-	private float fmlFour = four;
-	
-	private List<Boolean> isDraw = new ArrayList<Boolean>();
+	float[] fmlLines = {0, one, two, three, four, 1038};
+	boolean[] isDraw = {true, true, true, true, true};
 	
 	private int flag;
 	
@@ -54,48 +50,42 @@ public class MontainBrownSoil extends ImageView{
 		paint.setStyle(Paint.Style.STROKE);//设置空心
 		paint.setStrokeWidth(3);  
 		paint.setTextSize(30);
-		
-		isDraw.add(true);
-		isDraw.add(true);
-		isDraw.add(true);
-		isDraw.add(true);
-		isDraw.add(true);
     }  
 	
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (fmlFour-10 < event.getY() && event.getY() < fmlFour + 10) {
+		if (fmlLines[4]-10 < event.getY() && event.getY() < fmlLines[4] + 10) {
 			flag = 4;
-		}else if (fmlThree-10 < event.getY() && event.getY() < fmlThree + 10) {
+		}else if (fmlLines[3]-10 < event.getY() && event.getY() < fmlLines[3] + 10) {
 			flag = 3;
-		}else if (fmlTwo-10 < event.getY() && event.getY() < fmlTwo + 10) {
+		}else if (fmlLines[2]-10 < event.getY() && event.getY() < fmlLines[2] + 10) {
 			flag = 2;
-		}else if (fmlOne-10 < event.getY() && event.getY() < fmlOne + 10){
+		}else if (fmlLines[1]-10 < event.getY() && event.getY() < fmlLines[1] + 10){
 			flag = 1;
 		}
 		switch (flag) {
 		case 4:
-			if (event.getY()> fmlThree+20 && event.getY()<1280) {
-				fmlFour = event.getY();
+			if (event.getY()> fmlLines[3]+20 && event.getY()<1280) {
+				fmlLines[4] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
 		case 3:
-			if (event.getY()> fmlTwo+20 && event.getY()<fmlFour-20) {
-				fmlThree = event.getY();
+			if (event.getY()> fmlLines[2]+20 && event.getY()<fmlLines[4]-20) {
+				fmlLines[3] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
 		case 2:
-			if (event.getY()> fmlOne+20 && event.getY()<fmlThree-20) {
-				fmlTwo = event.getY();
+			if (event.getY()> fmlLines[1]+20 && event.getY()<fmlLines[3]-20) {
+				fmlLines[2] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
 		case 1:
-			if (event.getY()> 20 && event.getY()<fmlTwo-20) {
-				fmlOne = event.getY();
+			if (event.getY()> 20 && event.getY()<fmlLines[2]-20) {
+				fmlLines[1] = event.getY();
 				invalidate(); //重新绘制区域
 			}
 			break;
@@ -117,33 +107,33 @@ public class MontainBrownSoil extends ImageView{
 		
 		setImageResource(R.drawable.transparent_backgroud_frame);
 		
-		if (isDraw.get(0)) {
+		if (isDraw[0]) {
 			//枯枝落叶层——O
-			DrawLegend.DrawProfileO(canvasBitmap, paint, width, fmlOne);
+			DrawLegend.DrawProfileO(canvasBitmap, paint, width, fmlLines[1]);
 		}
 		
-		if (isDraw.get(1)) {
+		if (isDraw[1]) {
 			//腐殖质层——A
-			DrawLegend.DrawProfileA(canvasBitmap, paint, width, fmlOne, fmlTwo);
-			canvasBitmap.drawLine(0f, fmlOne, width, fmlOne, paint);
+			DrawLegend.DrawProfileA(canvasBitmap, paint, width, fmlLines[1], fmlLines[2]);
+			canvasBitmap.drawLine(0f, fmlLines[1], width, fmlLines[1], paint);
 		}
 		
-		if (isDraw.get(2)) {
+		if (isDraw[2]) {
 			//淋溶层——E
-			DrawLegend.DrawProfileE(canvasBitmap, paint, width, fmlTwo, fmlThree);
-			canvasBitmap.drawLine(0f, fmlTwo, width, fmlTwo, paint);
+			DrawLegend.DrawProfileE(canvasBitmap, paint, width, fmlLines[2], fmlLines[3]);
+			canvasBitmap.drawLine(0f, fmlLines[2], width, fmlLines[2], paint);
 		}
 		
-		if (isDraw.get(3)) {
+		if (isDraw[3]) {
 			//沉淀层——B
-			DrawLegend.DrawProfileB(canvasBitmap, paint, width, fmlThree, fmlFour);
-			canvasBitmap.drawLine(0f, fmlThree, width, fmlThree, paint);
+			DrawLegend.DrawProfileB(canvasBitmap, paint, width, fmlLines[3], fmlLines[4]);
+			canvasBitmap.drawLine(0f, fmlLines[3], width, fmlLines[3], paint);
 		}
 		
-		if (isDraw.get(4)) {
+		if (isDraw[4]) {
 			//母质质层——C
-			DrawLegend.DrawProfileC(canvasBitmap, paint, width, fmlFour, height);
-			canvasBitmap.drawLine(0f, fmlFour, width, fmlFour, paint);  
+			DrawLegend.DrawProfileC(canvasBitmap, paint, width, fmlLines[4], height);
+			canvasBitmap.drawLine(0f, fmlLines[4], width, fmlLines[4], paint);  
 		}
 		
 		canvasBitmap.drawLine(600, 0, 600, 1038, paint);
@@ -161,19 +151,13 @@ public class MontainBrownSoil extends ImageView{
 	
 	int num =  0;
 	public void deleteProfile(int n) {
-		isDraw.set(n-1+num, false);
-		if (num<isDraw.size()-1) {
+		isDraw[n-1+num] = false;
+		if (num<isDraw.length-1) {
 			num++;
 		}
-		float temp = fmlOne;
-		float temp1 = fmlTwo;
-		float temp2 = fmlThree;
-		float temp3 = fmlFour;
-		fmlOne = 0;
-		fmlTwo = temp;
-		fmlThree = temp1;
-		fmlFour = temp2;
-		height = (int) temp3;
+		for(int i = fmlLines.length-1; i>=n;i--){
+			fmlLines[i] = fmlLines[i-1];
+		}
 		invalidate();
 	}
 
