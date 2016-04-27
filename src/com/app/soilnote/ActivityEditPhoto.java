@@ -172,7 +172,8 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			saveBitmap();
 			break;
 		case R.id.save_edit_back:
-			cusDrawMdl.unDo();
+//			cusDrawMdl.unDo();
+			montainBrownSoil.deleteProfile(1);
 		default:
 			break;
 		}

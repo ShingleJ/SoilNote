@@ -14,6 +14,7 @@ public class DrawLegend {
 			float y = (float) (Math.random()*height);
 			canvas.drawPoint(x, y, paint);
 		}
+		canvas.drawText("O", width+50, height/2, paint);
 	}
 	
 	public static void DrawProfileA(Canvas canvas, Paint paint, float width, float height1, float height2) {
@@ -25,6 +26,7 @@ public class DrawLegend {
 			}
 			i += 30;
 		}
+		canvas.drawText("A", width+50, (height1+height2)/2, paint);
 	}
 	
 	public static void DrawProfileAB(Canvas canvas, Paint paint, float width, float height1, float height2) {
@@ -38,6 +40,7 @@ public class DrawLegend {
 			}
 			i += 50;
 		}
+		canvas.drawText("AB", width+50, (height1+height2)/2, paint);
 	}
 	
 	public static void DrawProfileB(Canvas canvas, Paint paint, float width, float height1, float height2) {
@@ -56,6 +59,7 @@ public class DrawLegend {
 			}
 			i += len+20;
 		}
+		canvas.drawText("B", width+50, (height1+height2)/2, paint);
 	}
 	
 	public static void DrawProfileC(Canvas canvas, Paint paint, float width, float height1, float height2){
@@ -72,6 +76,24 @@ public class DrawLegend {
 			count++;
 			i+=40;
 		}
+		canvas.drawText("C", width+50, (height1+height2)/2, paint);
+	}
+	
+	public static void DrawProfileC2(Canvas canvas, Paint paint, float width, float height1, float height2){
+		//Ä¸ÖÊÖÊ²ã¡ª¡ªC
+		int count = 0;
+		int j;
+		for(int i = (int) (height1);i<height2-20;){
+			canvas.drawLine(0,i, width, i, paint);
+			j = (count%2==0)?50:0;
+			for(;j<width;){
+				canvas.drawLine(j, i, j, i+20, paint);
+				j+=100;
+			}
+			count++;
+			i+=40;
+		}
+		canvas.drawText("C2", width+50, (height1+height2)/2, paint);
 	}
 	
 	public static void DrawProfileC1(Canvas canvas, Paint paint, float width, float height1, float height2){
@@ -81,6 +103,7 @@ public class DrawLegend {
 			canvas.drawLine(i+gap, height1, i, height2, paint);
 			i += gap;
 		}
+		canvas.drawText("C1", width+50, (height1+height2)/2, paint);
 	}
 	
 	public static void DrawProfileBC(Canvas canvas, Paint paint, float width, float height1, float height2){
@@ -89,6 +112,7 @@ public class DrawLegend {
 			canvas.drawLine(0f, i, width, i, paint);
 			i += 30;
 		}
+		canvas.drawText("BC", width+50, (height1+height2)/2, paint);
 	}
 	
 	public static void DrawProfileE(Canvas canvas, Paint paint, float width, float height1, float height2) {
@@ -104,5 +128,6 @@ public class DrawLegend {
 			n++;
 			i+=40;
 		}
+		canvas.drawText("E", width+50, (height1+height2)/2, paint);
 	}
 }

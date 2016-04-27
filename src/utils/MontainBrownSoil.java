@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.app.soilnote.R;
 
 import android.R.integer;
@@ -9,8 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -33,6 +34,8 @@ public class MontainBrownSoil extends ImageView{
 	private float fmlThree = three;
 	private float fmlFour = four;
 	
+	private List<Boolean> isDraw = new ArrayList<Boolean>();
+	
 	private int flag;
 	
 	public MontainBrownSoil(Context context) {
@@ -51,6 +54,12 @@ public class MontainBrownSoil extends ImageView{
 		paint.setStyle(Paint.Style.STROKE);//ÉèÖÃ¿ÕÐÄ
 		paint.setStrokeWidth(3);  
 		paint.setTextSize(30);
+		
+		isDraw.add(true);
+		isDraw.add(true);
+		isDraw.add(true);
+		isDraw.add(true);
+		isDraw.add(true);
     }  
 	
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
@@ -107,32 +116,35 @@ public class MontainBrownSoil extends ImageView{
 		height = canvas.getHeight();
 		
 		setImageResource(R.drawable.transparent_backgroud_frame);
-		 
-		//¿ÝÖ¦ÂäÒ¶²ã¡ª¡ªO
-		DrawLegend.DrawProfileO(canvasBitmap, paint, width, fmlOne);
 		
-		//¸¯Ö³ÖÊ²ã¡ª¡ªA
-		DrawLegend.DrawProfileA(canvasBitmap, paint, width, fmlOne, fmlTwo);
+		if (isDraw.get(0)) {
+			//¿ÝÖ¦ÂäÒ¶²ã¡ª¡ªO
+			DrawLegend.DrawProfileO(canvasBitmap, paint, width, fmlOne);
+		}
 		
-		//ÁÜÈÜ²ã¡ª¡ªE
-		DrawLegend.DrawProfileE(canvasBitmap, paint, width, fmlTwo, fmlThree);
+		if (isDraw.get(1)) {
+			//¸¯Ö³ÖÊ²ã¡ª¡ªA
+			DrawLegend.DrawProfileA(canvasBitmap, paint, width, fmlOne, fmlTwo);
+			canvasBitmap.drawLine(0f, fmlOne, width, fmlOne, paint);
+		}
 		
-		//³Áµí²ã¡ª¡ªB
-		DrawLegend.DrawProfileB(canvasBitmap, paint, width, fmlThree, fmlFour);
+		if (isDraw.get(2)) {
+			//ÁÜÈÜ²ã¡ª¡ªE
+			DrawLegend.DrawProfileE(canvasBitmap, paint, width, fmlTwo, fmlThree);
+			canvasBitmap.drawLine(0f, fmlTwo, width, fmlTwo, paint);
+		}
 		
-		//Ä¸ÖÊÖÊ²ã¡ª¡ªC
-		DrawLegend.DrawProfileC(canvasBitmap, paint, width, fmlFour, height);
+		if (isDraw.get(3)) {
+			//³Áµí²ã¡ª¡ªB
+			DrawLegend.DrawProfileB(canvasBitmap, paint, width, fmlThree, fmlFour);
+			canvasBitmap.drawLine(0f, fmlThree, width, fmlThree, paint);
+		}
 		
-		canvasBitmap.drawText("O", 650, fmlOne/2, paint);
-		canvasBitmap.drawText("A", 650, (fmlOne+fmlTwo)/2, paint);
-		canvasBitmap.drawText("E", 650, (fmlThree+fmlTwo)/2, paint);
-		canvasBitmap.drawText("B", 650, (fmlThree+fmlFour)/2, paint);
-		canvasBitmap.drawText("C", 650, (fmlFour+1000)/2, paint);
-		
-		canvasBitmap.drawLine(0f, fmlOne, width, fmlOne, paint);
-		canvasBitmap.drawLine(0f, fmlTwo, width, fmlTwo, paint);
-		canvasBitmap.drawLine(0f, fmlThree, width, fmlThree, paint);
-		canvasBitmap.drawLine(0f, fmlFour, width, fmlFour, paint);  
+		if (isDraw.get(4)) {
+			//Ä¸ÖÊÖÊ²ã¡ª¡ªC
+			DrawLegend.DrawProfileC(canvasBitmap, paint, width, fmlFour, height);
+			canvasBitmap.drawLine(0f, fmlFour, width, fmlFour, paint);  
+		}
 		
 		canvasBitmap.drawLine(600, 0, 600, 1038, paint);
 		
@@ -145,6 +157,24 @@ public class MontainBrownSoil extends ImageView{
 		}else {
 			return null;
 		}
+	}
+	
+	int num =  0;
+	public void deleteProfile(int n) {
+		isDraw.set(n-1+num, false);
+		if (num<isDraw.size()-1) {
+			num++;
+		}
+		float temp = fmlOne;
+		float temp1 = fmlTwo;
+		float temp2 = fmlThree;
+		float temp3 = fmlFour;
+		fmlOne = 0;
+		fmlTwo = temp;
+		fmlThree = temp1;
+		fmlFour = temp2;
+		height = (int) temp3;
+		invalidate();
 	}
 
 }
