@@ -47,14 +47,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     
-    <utils.CustomDrawMdl 
+    <model.CustomDrawMdl.CustomDrawMdl 
         android:id="@+id/id_cus_draw"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:visibility="gone" />
     
-    <utils.MontainYelloSoilTwo
+    <model.CustomChooseMdl.SevenLayerCusMdl
         android:id="@+id/id_chs_mdl"
         android:src="@drawable/transparent_backgroud_frame"
         android:layout_width="match_parent"

@@ -3,9 +3,9 @@ package db;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.InfoAttrFeat;
-import model.InfoAttrRec;
-import model.InfoGeo;
+import model.DatabaseMdl.InfoAttrFeat;
+import model.DatabaseMdl.InfoAttrRec;
+import model.DatabaseMdl.InfoGeo;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

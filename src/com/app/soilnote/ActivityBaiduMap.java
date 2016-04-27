@@ -5,7 +5,7 @@ import java.util.List;
 
 import utils.BitmapUtils;
 
-import model.InfoGeo;
+import model.DatabaseMdl.InfoGeo;
 
 import com.app.soilnote.MyOrientationListener.OnOrientationListener;
 import com.baidu.location.BDLocation;

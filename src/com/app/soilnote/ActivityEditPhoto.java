@@ -8,18 +8,24 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 
-import model.InfoGeo;
+import model.CustomChooseMdl.FiveLayerCusMdl;
+import model.CustomChooseMdl.FourLayerCusMdl;
+import model.CustomChooseMdl.SevenLayerCusMdl;
+import model.CustomChooseMdl.SixLayerCusMdl;
+import model.CustomChooseMdl.ThreeLayerCusMdl;
+import model.CustomDrawMdl.CustomDrawMdl;
+import model.DatabaseMdl.InfoGeo;
+import model.InitProfileModel.MontainBrownSoil;
+import model.InitProfileModel.MontainYelloBrownSoil;
+import model.InitProfileModel.MontainYelloSoilOne;
+import model.InitProfileModel.MontainYelloSoilThree;
+import model.InitProfileModel.MontainYelloSoilTwo;
 
 import db.SoilNoteDB;
 
 import utils.BitmapUtils;
-import utils.CustomDrawMdl;
-import utils.MontainBrownSoil;
-import utils.MontainYelloBrownSoil;
-import utils.MontainYelloSoilOne;
-import utils.MontainYelloSoilThree;
-import utils.MontainYelloSoilTwo;
 
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -56,7 +62,13 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 	private MontainBrownSoil montainBrownSoil;
 	private MontainYelloSoilThree montainYelloSoilThree;
 	private MontainYelloBrownSoil montainYelloBrownSoil;
-//	private  ;
+	private ThreeLayerCusMdl threeLayerCusMdl;
+	private FourLayerCusMdl fourLayerCusMdl;
+	private FiveLayerCusMdl fiveLayerCusMdl;
+	private SixLayerCusMdl sixLayerCusMdl;
+	private SevenLayerCusMdl sevenLayerCusMdl;
+	
+	private int[] pro_name = {50,201,40,301,401,20,30};
 	
 	private final int CHOOSE_MODEL = 0;
 	private final int CUSTOM_DRAW = 1;
@@ -108,7 +120,8 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			}  
 		}); 
 //		montainYelloSoilThree = (montainYelloSoilThree) findViewById(R.id.id_chs_mdl);
-		montainYelloSoilTwo = (MontainYelloSoilTwo) findViewById(R.id.id_chs_mdl);
+		sevenLayerCusMdl = (SevenLayerCusMdl) findViewById(R.id.id_chs_mdl);
+		sevenLayerCusMdl.setPro_name(pro_name);
 		cusDrawMdl = (CustomDrawMdl) findViewById(R.id.id_cus_draw);
 		
 		saveButton.setOnClickListener(this);
@@ -128,27 +141,27 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			flag = CHOOSE_MODEL;
 			img.setVisibility(View.GONE);
 			cusDrawMdl.setVisibility(View.GONE);
-			montainYelloSoilTwo.setVisibility(View.VISIBLE);
-			ViewTreeObserver vto = montainYelloSoilTwo.getViewTreeObserver();  
+			sevenLayerCusMdl.setVisibility(View.VISIBLE);
+			ViewTreeObserver vto = sevenLayerCusMdl.getViewTreeObserver();  
 			vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
 				@SuppressWarnings("deprecation")
 				@SuppressLint("NewApi") @Override  
 				public void onGlobalLayout() {  
-					montainYelloSoilTwo.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
+					sevenLayerCusMdl.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
 					//TODO 判断id是否相同
-					bm = BitmapUtils.decodeSampledBitmapFromFile(imageFilePath, montainYelloSoilTwo.getWidth(),montainYelloSoilTwo.getHeight());
-//					montainYelloSoilTwo.setImageBitmap(bm);
+					bm = BitmapUtils.decodeSampledBitmapFromFile(imageFilePath, sevenLayerCusMdl.getWidth(),sevenLayerCusMdl.getHeight());
+//					sevenLayerCusMdl.setImageBitmap(bm);
 					//把图片设为背景
 					Drawable drawable = new BitmapDrawable(bm); 
-					montainYelloSoilTwo.setBackground(drawable);      
-//					montainYelloSoilTwo.setImageResource(R.drawable.transparent_backgroud_frame);
+					sevenLayerCusMdl.setBackground(drawable);      
+//					sevenLayerCusMdl.setImageResource(R.drawable.transparent_backgroud_frame);
 				}  
 			}); 
 			break;
 		case R.id.custom_draw:
 			flag = CUSTOM_DRAW;
 			img.setVisibility(View.GONE);
-			montainYelloSoilTwo.setVisibility(View.GONE);
+			sevenLayerCusMdl.setVisibility(View.GONE);
 			cusDrawMdl.setVisibility(View.VISIBLE);
 			 ViewTreeObserver vto1 = cusDrawMdl.getViewTreeObserver();  
 			 vto1.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
@@ -171,7 +184,7 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			break;
 		case R.id.save_edit_back:
 //			cusDrawMdl.unDo();
-			montainYelloSoilTwo.deleteProfile(1);
+			sevenLayerCusMdl.deleteProfile(1);
 		default:
 			break;
 		}
@@ -241,9 +254,9 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
             //将ImageView中的图片转换成Bitmap
             Bitmap bitmap = null;
             if (flag == CHOOSE_MODEL) {
-//            	montainYelloSoilTwo.buildDrawingCache();
-//                bitmap = montainYelloSoilTwo.getDrawingCache();
-            	bitmap = montainYelloSoilTwo.getProModelBitmap();
+//            	sevenLayerCusMdl.buildDrawingCache();
+//                bitmap = sevenLayerCusMdl.getDrawingCache();
+            	bitmap = sevenLayerCusMdl.getProModelBitmap();
 			}else if (flag == CUSTOM_DRAW) {
 				cusDrawMdl.buildDrawingCache();
 				bitmap = cusDrawMdl.getDrawingCache();

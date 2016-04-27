@@ -2,9 +2,10 @@ package com.app.soilnote;
 
 import java.util.List;
 
+import model.InitProfileModel.MontainYelloSoilOne;
+
 import db.SoilNoteDB;
 import utils.BitmapUtils;
-import utils.MontainYelloSoilOne;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
