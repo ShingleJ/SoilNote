@@ -1,12 +1,7 @@
 package com.app.soilnote;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -103,6 +98,7 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 	    img = (ImageView) findViewById(R.id.id_orig_img);
 	    ViewTreeObserver vto = img.getViewTreeObserver();  
 		vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
+			@SuppressWarnings("deprecation")
 			@Override  
 			public void onGlobalLayout() {  
 				img.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
@@ -135,6 +131,7 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			montainBrownSoil.setVisibility(View.VISIBLE);
 			ViewTreeObserver vto = montainBrownSoil.getViewTreeObserver();  
 			vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
+				@SuppressWarnings("deprecation")
 				@SuppressLint("NewApi") @Override  
 				public void onGlobalLayout() {  
 					montainBrownSoil.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
@@ -155,6 +152,7 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			cusDrawMdl.setVisibility(View.VISIBLE);
 			 ViewTreeObserver vto1 = cusDrawMdl.getViewTreeObserver();  
 			 vto1.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
+					@SuppressWarnings("deprecation")
 					@Override  
 					public void onGlobalLayout() {  
 						cusDrawMdl.getViewTreeObserver().removeGlobalOnLayoutListener(this);  

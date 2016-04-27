@@ -6,7 +6,6 @@ import java.util.List;
 import model.InfoAttrFeat;
 import model.InfoAttrRec;
 import model.InfoGeo;
-import android.R.integer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
