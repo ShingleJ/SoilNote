@@ -8,6 +8,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 
+import model.BaseProfileModel;
 import model.CustomChooseMdl.FiveLayerCusMdl;
 import model.CustomChooseMdl.FourLayerCusMdl;
 import model.CustomChooseMdl.SevenLayerCusMdl;
@@ -24,64 +25,59 @@ import model.InitProfileModel.MontainYelloSoilTwo;
 import db.SoilNoteDB;
 
 import utils.BitmapUtils;
+import utils.ProfileModelFactory;
 
+import android.R.color;
 import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-public class ActivityEditPhoto extends Activity implements OnClickListener{
-
-	private Bitmap bitMap; // 用来保存图片
-	private Bitmap alterBitmap;
-	private boolean hasImage; // 是否已经选择了图片
+public class ActivityEditPhoto extends Activity implements OnClickListener,OnItemSelectedListener{
 
 	private String imageFilePath;
 	private Bitmap bm;
 
-	private Button saveButton, chsModelButton, cusDrawButton, saveEditButton, cusDrawBackButton;
+	private FrameLayout layout;
+	private String[] list = {"选择模板", "山地黄壤1","山地黄壤2","山地黄壤3","山地黄棕壤","山地棕壤"};
+	private ArrayAdapter<String> adapter;
+	private Spinner chsMdlSp;
+	private Button cusDrawButton, saveEditButton, cusDrawBackButton;
 	private ImageView img;
 	private CustomDrawMdl cusDrawMdl;
 	private MontainYelloSoilOne montainYelloSoilOne;
-	private MontainYelloSoilTwo montainYelloSoilTwo ;
-	private MontainBrownSoil montainBrownSoil;
-	private MontainYelloSoilThree montainYelloSoilThree;
-	private MontainYelloBrownSoil montainYelloBrownSoil;
-	private ThreeLayerCusMdl threeLayerCusMdl;
-	private FourLayerCusMdl fourLayerCusMdl;
-	private FiveLayerCusMdl fiveLayerCusMdl;
-	private SixLayerCusMdl sixLayerCusMdl;
-	private SevenLayerCusMdl sevenLayerCusMdl;
 	
 	private int[] pro_name = {50,201,40,301,401,20,30};
 	
 	private final int CHOOSE_MODEL = 0;
 	private final int CUSTOM_DRAW = 1;
 	private int flag;
-
-	// 拍照定位相关（使用百度地图定位功能，不使用Android自带的locationManager）
-	private LocationClient mLocationClient;
-	private MyLocationListener myLocationListener;
-	private double mLatitude, mLongtitude;
-	private String humanPosition;
-
-	// 数据库相关
-	private SoilNoteDB soilNoteDB;
+	
+	private static final int CHOOSE_MODEL_ACTIVITY = 10;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,17 +88,18 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 		Intent intent = getIntent();
 		imageFilePath = intent.getStringExtra("imageFilePath");
 		
+		
 		initView();//初始化控件
-		
-		soilNoteDB = SoilNoteDB.getInstance(this);
-		
-		initLocation();
 	}
 
 	@SuppressLint("CutPasteId") 
 	private void initView() {
-		saveButton = (Button) findViewById(R.id.id_save);
-		chsModelButton = (Button) findViewById(R.id.choose_model);
+		chsMdlSp = (Spinner) findViewById(R.id.choose_model);
+		// 建立Adapter并且绑定数据源
+		adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, list);
+		//绑定 Adapter到控件
+		chsMdlSp.setAdapter(adapter);
+				
 		cusDrawButton = (Button) findViewById(R.id.custom_draw);
 		saveEditButton = (Button) findViewById(R.id.save_edit);
 		cusDrawBackButton = (Button) findViewById(R.id.save_edit_back);
@@ -120,12 +117,11 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			}  
 		}); 
 //		montainYelloSoilThree = (montainYelloSoilThree) findViewById(R.id.id_chs_mdl);
-		sevenLayerCusMdl = (SevenLayerCusMdl) findViewById(R.id.id_chs_mdl);
-		sevenLayerCusMdl.setPro_name(pro_name);
+//		sevenLayerCusMdl.setPro_name(pro_name);
 		cusDrawMdl = (CustomDrawMdl) findViewById(R.id.id_cus_draw);
+		layout = (FrameLayout) findViewById(R.id.layout_chs_mdl);
 		
-		saveButton.setOnClickListener(this);
-		chsModelButton.setOnClickListener(this);
+		chsMdlSp.setOnItemSelectedListener(this);
 		cusDrawButton.setOnClickListener(this);
 		saveEditButton.setOnClickListener(this);
 		cusDrawBackButton.setOnClickListener(this);
@@ -134,34 +130,10 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 	@SuppressLint("NewApi") @Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.id_save:
-			saveInfoGeo();
-			break;
-		case R.id.choose_model:
-			flag = CHOOSE_MODEL;
-			img.setVisibility(View.GONE);
-			cusDrawMdl.setVisibility(View.GONE);
-			sevenLayerCusMdl.setVisibility(View.VISIBLE);
-			ViewTreeObserver vto = sevenLayerCusMdl.getViewTreeObserver();  
-			vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
-				@SuppressWarnings("deprecation")
-				@SuppressLint("NewApi") @Override  
-				public void onGlobalLayout() {  
-					sevenLayerCusMdl.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
-					//TODO 判断id是否相同
-					bm = BitmapUtils.decodeSampledBitmapFromFile(imageFilePath, sevenLayerCusMdl.getWidth(),sevenLayerCusMdl.getHeight());
-//					sevenLayerCusMdl.setImageBitmap(bm);
-					//把图片设为背景
-					Drawable drawable = new BitmapDrawable(bm); 
-					sevenLayerCusMdl.setBackground(drawable);      
-//					sevenLayerCusMdl.setImageResource(R.drawable.transparent_backgroud_frame);
-				}  
-			}); 
-			break;
 		case R.id.custom_draw:
 			flag = CUSTOM_DRAW;
 			img.setVisibility(View.GONE);
-			sevenLayerCusMdl.setVisibility(View.GONE);
+			montainYelloSoilOne.setVisibility(View.GONE);
 			cusDrawMdl.setVisibility(View.VISIBLE);
 			 ViewTreeObserver vto1 = cusDrawMdl.getViewTreeObserver();  
 			 vto1.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
@@ -184,63 +156,26 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
 			break;
 		case R.id.save_edit_back:
 //			cusDrawMdl.unDo();
-			sevenLayerCusMdl.deleteProfile(1);
+			montainYelloSoilOne.deleteProfile(1);
 		default:
 			break;
 		}
 	}
-	
-    //好像如果把saveInfoGeo内部代码直接放在点击事件下面，经纬度等信息都是空的，这样写就能有数据
-	private void saveInfoGeo() {
-		InfoGeo infoGeo = new InfoGeo();
-		infoGeo.setImagePath(imageFilePath);
-		infoGeo.setLatitude(mLatitude);
-		infoGeo.setLongtitude(mLongtitude);
-		infoGeo.setPosition(humanPosition);
-		soilNoteDB.saveInfoGeo(infoGeo);
-	}
 
-	/*
-	 * 定位相关
-	 */
-	private void initLocation() {
-		mLocationClient = new LocationClient(this);
-		myLocationListener = new MyLocationListener();
-		mLocationClient.registerLocationListener(myLocationListener);// 注册定位监听器
-		// 设置定位的一些属性
-		LocationClientOption option = new LocationClientOption();
-		option.setCoorType("bd09ll");// 坐标类型
-		option.setIsNeedAddress(true);// 返回位置
-		option.setOpenGps(true);// 打开GPS
-		option.setScanSpan(1000);// 每隔1000秒进行一次请求
-		mLocationClient.setLocOption(option);
-	}
-
-	private class MyLocationListener implements BDLocationListener {
-
-		@Override
-		public void onReceiveLocation(BDLocation location) {
-			mLatitude = location.getLatitude();
-			mLongtitude = location.getLongitude();
-			humanPosition = location.getAddrStr();
-		}
-
-	}
-	
-	@Override
-	protected void onStart() {
-		// TODO 自动生成的方法存根
-		super.onStart();
-		if (!mLocationClient.isStarted()) {
-			mLocationClient.start();
-		}
-	}
-	
-	@Override
-	protected void onStop() {
-		// TODO 自动生成的方法存根
-		super.onStop();
-		mLocationClient.stop();
+	private void showProfileModel(final BaseProfileModel base) {
+		ViewTreeObserver vto = base.getViewTreeObserver();  
+		vto.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {  
+			@SuppressWarnings("deprecation")
+			@SuppressLint("NewApi") @Override  
+			public void onGlobalLayout() {  
+				base.getViewTreeObserver().removeGlobalOnLayoutListener(this);  
+				//TODO 判断id是否相同
+				bm = BitmapUtils.decodeSampledBitmapFromFile(imageFilePath, base.getWidth(),base.getHeight());
+				//把图片设为背景
+				Drawable drawable = new BitmapDrawable(bm); 
+				base.setBackground(drawable);      
+			}  
+		});
 	}
 
 	 /**  
@@ -256,7 +191,7 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
             if (flag == CHOOSE_MODEL) {
 //            	sevenLayerCusMdl.buildDrawingCache();
 //                bitmap = sevenLayerCusMdl.getDrawingCache();
-            	bitmap = sevenLayerCusMdl.getProModelBitmap();
+            	bitmap = montainYelloSoilOne.getProModelBitmap();
 			}else if (flag == CUSTOM_DRAW) {
 				cusDrawMdl.buildDrawingCache();
 				bitmap = cusDrawMdl.getDrawingCache();
@@ -279,4 +214,65 @@ public class ActivityEditPhoto extends Activity implements OnClickListener{
             e.printStackTrace();  
         }  
     }
+
+	@SuppressLint("ShowToast") 
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View arg1, int position,
+			long arg3) {
+		flag = CHOOSE_MODEL;
+		if (position == 0) {
+			img.setVisibility(View.VISIBLE);
+			cusDrawMdl.setVisibility(View.GONE);
+		}else {
+			img.setVisibility(View.GONE);
+			cusDrawMdl.setVisibility(View.GONE);
+			layout.setVisibility(View.VISIBLE);
+			switch (position) {
+			case 1:
+				layout.removeAllViews();
+				MontainYelloSoilOne one = new MontainYelloSoilOne(this);
+				one.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+				showProfileModel(one);
+				layout.addView(one);
+				break;
+			case 2:
+				layout.removeAllViews();
+				MontainYelloSoilTwo two = new MontainYelloSoilTwo(this);
+				two.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+				showProfileModel(two);
+				layout.addView(two);
+				break;
+			case 3:
+				layout.removeAllViews();
+				MontainYelloSoilThree three = new MontainYelloSoilThree(this);
+				three.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+				showProfileModel(three);
+				layout.addView(three);
+				break;
+			case 4:
+				layout.removeAllViews();
+				MontainYelloBrownSoil four = new MontainYelloBrownSoil(this);
+				four.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+				showProfileModel(four);
+				layout.addView(four);
+				break;
+			case 5:
+				layout.removeAllViews();
+				MontainBrownSoil five = new MontainBrownSoil(this);
+				five.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+				showProfileModel(five);
+				layout.addView(five);
+				break;
+			default:
+				break;
+			}
+			
+		}
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO 自动生成的方法存根
+		
+	}
 }

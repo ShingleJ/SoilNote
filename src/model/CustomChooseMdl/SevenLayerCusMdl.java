@@ -16,9 +16,13 @@ public class SevenLayerCusMdl extends BaseProfileModel{
 	private int[] pro_name;
 	private static float[] lines = {0, 1038*1/7, 1038*2/7, 1038*3/7, 1038*4/7, 1038*5/7, 1038*6/7, 1038};
 	
-    public SevenLayerCusMdl(Context context, AttributeSet attrs) {  
-        super(context, attrs, lines); 
-    }  
+//    public SevenLayerCusMdl(Context context, AttributeSet attrs) {  
+//        super(context, attrs, lines); 
+//    }  
+	
+	public SevenLayerCusMdl(Context context){
+		super(context, lines);
+	}
     
     public int[] getPro_name() {
     	return pro_name;

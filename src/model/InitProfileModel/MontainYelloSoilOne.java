@@ -22,10 +22,14 @@ public class MontainYelloSoilOne extends BaseProfileModel{
 	private static float[] lines = {0, one, two, three, four, 1038};
 	
 	//这一个构造函数是必须的
-    public MontainYelloSoilOne(Context context, AttributeSet attrs) {  
-        super(context, attrs, lines);  
-    }  
-	
+//    public MontainYelloSoilOne(Context context, AttributeSet attrs) {  
+//        super(context, attrs, lines);  
+//    }  
+//	
+	public MontainYelloSoilOne(Context context) {
+		super(context,lines);
+	}
+
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

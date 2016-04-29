@@ -8,7 +8,7 @@ import android.provider.MediaStore;
 public class UriAndString {
 	// 根据uri获得文件路径
 	@SuppressWarnings("unused")
-	private String getRealPathFromURI(Uri contentUri, Context context) {
+	private static String getRealPathFromURI(Uri contentUri, Context context) {
 		// TODO 自动生成的方法存根
 		String res = null;
 		String[] proj = { MediaStore.Images.Media.DATA };

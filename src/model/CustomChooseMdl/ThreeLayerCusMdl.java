@@ -15,9 +15,14 @@ public class ThreeLayerCusMdl extends BaseProfileModel{
 	private int[] pro_name;
 
 	private static float[] lines = {0, 1038*1/3, 1038*2/3, 1038};
-    public ThreeLayerCusMdl(Context context, AttributeSet attrs) {  
-        super(context, attrs, lines); 
-    }  
+	
+//    public ThreeLayerCusMdl(Context context, AttributeSet attrs) {  
+//        super(context, attrs, lines); 
+//    }  
+	
+	public ThreeLayerCusMdl(Context context){
+		super(context, lines);
+	}
 	
     public int[] getPro_name() {
     	return pro_name;

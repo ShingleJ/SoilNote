@@ -21,10 +21,13 @@ public class MontainYelloBrownSoil extends BaseProfileModel{
 	private static float[] lines = {0, one, two, three, 1038};
   
 	//这一个构造函数是必须的
-    public MontainYelloBrownSoil(Context context, AttributeSet attrs) {  
-        super(context, attrs, lines);
-    }  
+//    public MontainYelloBrownSoil(Context context, AttributeSet attrs) {  
+//        super(context, attrs, lines);
+//    }  
 	
+	public MontainYelloBrownSoil(Context context){
+		super(context, lines);
+	}
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

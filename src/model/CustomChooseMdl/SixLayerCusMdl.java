@@ -16,9 +16,13 @@ public class SixLayerCusMdl extends BaseProfileModel{
 	private int[] pro_name;
 	private static float[] lines = {0, 1038*1/6, 1038*2/6, 1038*3/6, 1038*4/6, 1038*5/6, 1038};
 	
-    public SixLayerCusMdl(Context context, AttributeSet attrs) {  
-        super(context, attrs, lines); 
-    }  
+//    public SixLayerCusMdl(Context context, AttributeSet attrs) {  
+//        super(context, attrs, lines); 
+//    }  
+	
+	public SixLayerCusMdl(Context context){
+		super(context, lines);
+	}
     
     public int[] getPro_name() {
     	return pro_name;

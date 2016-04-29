@@ -2,24 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-        
-    <Button 
-        android:id="@+id/id_save" 
-        android:layout_height="wrap_content" 
+    android:orientation="vertical"
+    android:id="@+id/layout_edit_photo" >
+
+    <Spinner 
+        android:id="@+id/choose_model"
         android:layout_width="match_parent"
-        android:text="保存位置信息"/>
+        android:layout_height="50dp"
+        android:text="土壤模板" />
+    
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
+        
         <Button 
-            android:id="@+id/choose_model"
+            android:id="@+id/cus_chs_model"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="选择模板" />
-        
+            android:text="自定义模板" />
+                
          <Button 
             android:id="@+id/custom_draw"
             android:layout_width="0dp"
@@ -32,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:text="保存编辑" />
+            android:text="保存剖面图" />
           
          <Button 
             android:id="@+id/save_edit_back"
@@ -53,13 +56,12 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:visibility="gone" />
-    
-    <model.CustomChooseMdl.SevenLayerCusMdl
-        android:id="@+id/id_chs_mdl"
-        android:src="@drawable/transparent_backgroud_frame"
+    <FrameLayout 
+        android:id="@+id/layout_chs_mdl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:visibility="gone" />
+        android:visibility="gone"
+        ></FrameLayout>
 
 </LinearLayout>

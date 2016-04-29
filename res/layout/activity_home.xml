@@ -60,7 +60,7 @@
         android:layout_width="140dp"
         android:layout_height="140dp"
         android:layout_alignRight="@+id/learn_more"
-        android:layout_below="@+id/Button01"
+        android:layout_below="@+id/album"
         android:layout_marginRight="14dp"
         android:layout_marginTop="21dp"
         android:background="@drawable/circle_btn"
@@ -69,13 +69,13 @@
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/Button01"
+        android:id="@+id/album"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignRight="@+id/baidu_map"
         android:layout_below="@+id/button3"
         android:background="@drawable/circle_btn"
-        android:text="未知"
+        android:text="相册"
         android:textColor="#ffffff"
         android:textSize="24sp" />
 

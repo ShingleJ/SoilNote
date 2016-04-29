@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#66cccc" >
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical" >
+        <TextView 
+            android:id="@+id/menu_chs_mdl"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="24sp"
+            android:text="选择模板"
+            />
+         <TextView 
+            android:id="@+id/menu_cus_chs_mdl"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="24sp"
+            android:text="自定义模板"
+            />
+          <TextView 
+            android:id="@+id/menu_cus_draw"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="24sp"
+            android:text="自定义绘制"
+            />
+           <TextView 
+            android:id="@+id/menu_save_mdl"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="24sp"
+            android:text="保存模板"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

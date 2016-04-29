@@ -23,9 +23,9 @@ public class BaseProfileModel extends ImageView{
     
     protected int flag;
     
-    public BaseProfileModel(Context context, AttributeSet attrs, float[] lines) {  
-        super(context, attrs);  
-        fmlLines = new float[lines.length];
+    public BaseProfileModel(Context context, float[] lines){
+    	super(context);
+    	fmlLines = new float[lines.length];
         isDraw = new boolean[lines.length-1];
         for (int i = 0; i < lines.length; i++) {
         	fmlLines[i] = lines[i];
@@ -44,6 +44,28 @@ public class BaseProfileModel extends ImageView{
 		linePaint.setStyle(Paint.Style.STROKE);//设置空心
 		linePaint.setStrokeWidth(6);  
     }
+    
+//    public BaseProfileModel(Context context, AttributeSet attrs, float[] lines) {  
+//        super(context, attrs);  
+//        fmlLines = new float[lines.length];
+//        isDraw = new boolean[lines.length-1];
+//        for (int i = 0; i < lines.length; i++) {
+//        	fmlLines[i] = lines[i];
+//		}
+//        for (int i = 0; i < lines.length-1; i++) {
+//        	isDraw[i] = true;
+//		}
+//        paint = new Paint();
+//		paint.setColor(Color.WHITE);
+//		paint.setStyle(Paint.Style.STROKE);//设置空心
+//		paint.setStrokeWidth(3);  
+//		paint.setTextSize(30);
+//		
+//		linePaint = new Paint();
+//		linePaint.setColor(Color.WHITE);
+//		linePaint.setStyle(Paint.Style.STROKE);//设置空心
+//		linePaint.setStrokeWidth(6);  
+//    }
     
 	public Bitmap getProModelBitmap() {
 		if (bitmap != null) {

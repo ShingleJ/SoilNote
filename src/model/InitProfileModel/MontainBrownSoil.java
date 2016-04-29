@@ -22,9 +22,13 @@ public class MontainBrownSoil extends BaseProfileModel{
 	private static float[] lines = {0, one, two, three, four, 1038};
   
 	//这一个构造函数是必须的
-    public MontainBrownSoil(Context context, AttributeSet attrs) {  
-        super(context, attrs, lines); 
-    }  
+//    public MontainBrownSoil(Context context, AttributeSet attrs) {  
+//        super(context, attrs, lines); 
+//    }  
+	
+	public MontainBrownSoil(Context context){
+		super(context, lines);
+	}
 	
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
 	@Override

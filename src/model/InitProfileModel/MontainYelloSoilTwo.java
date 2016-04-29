@@ -22,9 +22,12 @@ public class MontainYelloSoilTwo extends BaseProfileModel{
 	
 	private static float[] lines = {0, one, two, three, four, five, 1038};
 	
-    public MontainYelloSoilTwo(Context context, AttributeSet attrs) {  
-        super(context, attrs, lines);  
-    }  
+	public MontainYelloSoilTwo(Context context){
+		super(context, lines);
+	}
+//    public MontainYelloSoilTwo(Context context, AttributeSet attrs) {  
+//        super(context, attrs, lines);  
+//    }  
 	
 	@SuppressLint({ "UseValueOf", "ClickableViewAccessibility" }) 
 	@Override
@@ -115,7 +118,7 @@ public class MontainYelloSoilTwo extends BaseProfileModel{
 		if (isDraw[5]) {
 			//Ä¸ÖÊÖÊ²ã¡ª¡ªC2
 //			DrawLegend.drawProfileC(canvasBitmap, paint, width, fmlLines[5], height);
-			DrawLegend.drawProfileAE(canvasBitmap, paint, linePaint, width, fmlLines[5], height);
+			DrawLegend.drawProfileC2(canvasBitmap, paint, linePaint, width, fmlLines[5], height);
 //			canvasBitmap.drawLine(0f, fmlLines[5], width, fmlLines[5], paint);
 		}
 		canvasBitmap.drawLine(600, 0, 600, 1038, paint);

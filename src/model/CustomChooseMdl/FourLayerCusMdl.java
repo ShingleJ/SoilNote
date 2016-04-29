@@ -16,9 +16,13 @@ public class FourLayerCusMdl extends BaseProfileModel{
 	private int[] pro_name;
 	private static float[] lines = {0, 1038*1/4, 1038*2/4, 1038*3/4, 1038};
 	
-    public FourLayerCusMdl(Context context, AttributeSet attrs) {  
-        super(context, attrs, lines); 
-    }  
+//    public FourLayerCusMdl(Context context, AttributeSet attrs) {  
+//        super(context, attrs, lines); 
+//    }  
+	
+	public FourLayerCusMdl(Context context){
+		super(context, lines);
+	}
     
     public int[] getPro_name() {
     	return pro_name;

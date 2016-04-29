@@ -16,9 +16,13 @@ public class FiveLayerCusMdl extends BaseProfileModel{
 	private int[] pro_name;
 	private static float[] lines = {0, 1038*1/5, 1038*2/5, 1038*3/5, 1038*4/5, 1038};
 	
-    public FiveLayerCusMdl(Context context, AttributeSet attrs) {  
-        super(context, attrs, lines); 
-    }  
+//    public FiveLayerCusMdl(Context context, AttributeSet attrs) {  
+//        super(context, attrs, lines); 
+//    }  
+	
+	public FiveLayerCusMdl(Context context){
+		super(context, lines);
+	}
     
     public int[] getPro_name() {
     	return pro_name;
